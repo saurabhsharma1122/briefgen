@@ -1,109 +1,63 @@
-# BriefGen 📋
-**AI-powered client brief form generator. Built by Saurabh.**
+Brief Form Generator
 
-Describe your role → AI generates a professional brief form → Share with client → Client fills it & downloads PDF.
+Brief Form Generator is a tool designed to simplify the initial communication between clients and developers. In many projects, important details are often missed during the first discussion because clients are unsure about what information they should provide. This tool solves that problem by automatically generating a structured project brief form based on a single prompt.
 
----
+The generated form asks the right questions needed to clearly understand the project requirements. Clients can simply fill in the form without confusion or spending time thinking about what details are necessary.
 
-## 🗂️ Project Structure
+Why This Tool Exists
 
-```
-briefgen/
-├── api/
-│   └── generate.js      ← Serverless function (your API key lives here, safe)
-├── public/
-│   └── index.html       ← Full frontend
-├── package.json
-├── vercel.json
-└── README.md
-```
+During the early stage of a project, developers usually need specific information such as project goals, features, design preferences, timeline, budget, and technical requirements. However, clients often provide incomplete or unstructured information, which can lead to misunderstandings, delays, or multiple back-and-forth conversations.
 
----
+The Brief Form Generator ensures that all essential information is collected in a clear and organized way from the start.
 
-## 🚀 Deploy in 4 Steps
+How It Works
 
-### Step 1 — Get your free OpenRouter API key
-1. Go to **https://openrouter.ai** and sign up (free)
-2. Go to **Keys** section → click **Create Key**
-3. Copy the key — it looks like: `sk-or-v1-xxxxxxxxxxxx`
-4. You get free credits on signup — enough for hundreds of forms
+The developer or user provides a single prompt describing the type of project.
 
----
+The system analyzes the prompt.
 
-### Step 2 — Push to GitHub
-1. Go to **https://github.com** → click **New repository**
-2. Name it `briefgen` → click **Create repository**
-3. Upload all 4 files maintaining this folder structure:
-   ```
-   api/generate.js
-   public/index.html
-   package.json
-   vercel.json
-   ```
-   You can use GitHub's "Upload files" button or use Git
+It generates a customized project brief form tailored to that project.
 
----
+The client fills out the form with all required details.
 
-### Step 3 — Deploy to Vercel
-1. Go to **https://vercel.com** → Sign up with GitHub (free)
-2. Click **Add New Project** → Import your `briefgen` repo
-3. Click **Deploy** (default settings are fine)
-4. ✅ Your site is live! (something like `briefgen.vercel.app`)
+The developer receives structured and complete information to start the project.
 
----
+Key Features
 
-### Step 4 — Add your API key (the important bit)
-1. In Vercel dashboard → click your project → **Settings**
-2. Click **Environment Variables** in the left sidebar
-3. Add:
-   - **Name:** `OPENROUTER_API_KEY`
-   - **Value:** `sk-or-v1-your-key-here`
-4. Click **Save**
-5. Go to **Deployments** → click the 3 dots → **Redeploy**
+Single Prompt Form Generation – Create a full project brief form instantly.
 
-**Done! Your site is now fully working. 🎉**
+Client-Friendly Questions – Simple and clear questions to avoid confusion.
 
----
+Structured Data Collection – Ensures all important project details are gathered.
 
-## 💡 How It Works
+Saves Time – Reduces long discussions and repeated clarification.
 
-```
-User visits your Vercel URL
-        ↓
-Types their role → clicks Generate
-        ↓
-Frontend calls /api/generate  (your serverless function)
-        ↓
-Serverless function uses your OpenRouter key (safe, never exposed)
-        ↓
-OpenRouter calls Llama 3 (free AI model)
-        ↓
-Returns JSON schema → form renders on screen
-        ↓
-Client fills form → clicks Download → gets PDF → sends it back to you
-```
+Improves Communication – Helps both client and developer stay aligned.
 
-**Why is the key safe?**
-The API key lives only in Vercel's environment variables — never in the HTML file. Users can't see it even if they view source.
+Benefits
 
----
+Reduces misunderstandings between clients and developers
 
-## 🔧 Customisation
+Collects all important project details in one place
 
-**Change the AI model** (in `api/generate.js`):
-- `meta-llama/llama-3.3-8b-instruct:free` ← current (free)
-- `mistralai/mistral-7b-instruct:free` ← alternative free model
-- `anthropic/claude-haiku-4-5-20251001` ← better quality (costs a little)
+Speeds up the project planning process
 
-**Add more example chips** — edit the `EX` object in `public/index.html`
+Makes it easier for clients to explain their requirements
 
----
+Helps developers start with a clearer understanding of the project
 
-## 🆓 Costs
-- **Vercel hosting:** Free forever (Hobby plan)
-- **OpenRouter:** Free credits on signup, then pay-per-use (very cheap — fractions of a cent per form)
-- **GitHub:** Free
+Use Cases
 
----
+This tool can be useful for:
 
-Built by **Saurabh** · Powered by OpenRouter + Llama 3 + Vercel
+Web development projects
+
+App development projects
+
+UI/UX design briefs
+
+AI or software projects
+
+Freelancers collecting client requirements
+
+Agencies onboarding new clients
