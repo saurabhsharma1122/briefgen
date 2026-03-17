@@ -1,0 +1,9 @@
+{
+  "name": "briefgen",
+  "version": "1.0.0",
+  "description": "AI-powered client brief form generator",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}
