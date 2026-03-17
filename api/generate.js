@@ -70,7 +70,7 @@ RULES:
         'X-Title': 'BriefGen'
       },
       body: JSON.stringify({
-        model: 'meta-llama/llama-3.3-8b-instruct:free',
+        model: 'google/gemma-3-12b-it:free',
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 4000,
         temperature: 0.7
