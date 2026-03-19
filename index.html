@@ -356,31 +356,60 @@ footer strong{color:rgba(255,255,255,.65)}
 /* ─── API KEY MODAL ─── */
 .modal-overlay{
   position:fixed;inset:0;z-index:1000;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(6px);
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
   display:flex;align-items:center;justify-content:center;
   padding:20px;opacity:0;pointer-events:none;transition:.25s;
 }
 .modal-overlay.show{opacity:1;pointer-events:all}
 .modal{
   background:var(--card);border:1.5px solid var(--border);border-radius:20px;
-  padding:32px;width:100%;max-width:460px;
+  padding:32px;width:100%;max-width:500px;
   transform:translateY(20px);transition:.25s;
+  max-height:90vh;overflow-y:auto;
 }
 .modal-overlay.show .modal{transform:translateY(0)}
-.modal-icon{font-size:36px;margin-bottom:12px}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1.5px;color:var(--ink);margin-bottom:8px}
-.modal-sub{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:22px}
-.modal-sub a{color:var(--orange);text-decoration:none;font-weight:700}
-.modal-sub a:hover{text-decoration:underline}
+.modal-top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.modal-icon{font-size:28px}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1.5px;color:var(--ink)}
+.modal-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#FFF3EE;border:1.5px solid rgba(232,81,10,.25);
+  color:var(--orange);border-radius:100px;
+  padding:5px 12px;font-size:11px;font-weight:700;letter-spacing:.5px;
+  margin-bottom:18px;
+}
+.modal-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px}
+.modal-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.modal-step{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--cream);border:1px solid var(--border);border-radius:10px;
+  padding:12px 14px;
+}
+.modal-step-n{
+  width:24px;height:24px;border-radius:50%;background:var(--orange);color:#fff;
+  font-family:'Bebas Neue',sans-serif;font-size:14px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.modal-step-body{font-size:12.5px;line-height:1.55;color:var(--ink)}
+.modal-step-body strong{display:block;font-weight:700;margin-bottom:2px;font-size:13px}
+.modal-step-body a{color:var(--orange);font-weight:700;text-decoration:none}
+.modal-step-body a:hover{text-decoration:underline}
+.modal-step-body code{
+  background:#E8E4DE;border-radius:4px;padding:1px 6px;
+  font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink);
+}
+.modal-divider{height:1px;background:var(--border);margin:0 0 18px}
+.modal-inp-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .modal-inp{
   width:100%;border:1.5px solid var(--border);border-radius:10px;
   padding:13px 16px;font-family:'DM Mono',monospace;font-size:13px;
-  color:var(--ink);background:var(--cream);margin-bottom:8px;
+  color:var(--ink);background:var(--cream);margin-bottom:6px;
   transition:.2s;
 }
 .modal-inp:focus{outline:none;border-color:var(--orange);background:#fff;box-shadow:0 0 0 4px rgba(232,81,10,.1)}
 .modal-inp::placeholder{color:#B0AA9E}
-.modal-err{font-size:12px;color:#C0392B;margin-bottom:14px;min-height:18px;font-family:'Syne',sans-serif}
+.modal-inp-hint{font-size:11px;color:var(--muted);margin-bottom:14px}
+.modal-err{font-size:12px;color:#C0392B;margin-bottom:12px;min-height:16px;font-family:'Syne',sans-serif}
 .modal-btns{display:flex;gap:10px}
 .modal-btn-primary{
   flex:1;padding:13px;background:var(--orange);color:#fff;
@@ -392,7 +421,7 @@ footer strong{color:rgba(255,255,255,.65)}
 .modal-btn-secondary{
   padding:13px 18px;background:var(--cream);color:var(--muted);
   border:1.5px solid var(--border);border-radius:10px;
-  font-family:'Syne',sans-serif;font-size:14px;font-weight:600;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:600;
   cursor:pointer;transition:.2s;
 }
 .modal-btn-secondary:hover{border-color:var(--ink);color:var(--ink)}
@@ -552,7 +581,7 @@ footer strong{color:rgba(255,255,255,.65)}
     <div class="tb-brand">BriefGen</div>
     <div class="tb-btns">
       <button class="btn-ghost" onclick="startOver()">← New Brief</button>
-      <button class="btn-orange" id="topPdf" onclick="downloadPDF()">⬇ &nbsp;Download PDF</button>
+      <button class="btn-orange" id="topHtml" onclick="downloadHTML()">⬇ &nbsp;Download Client Form</button>
     </div>
   </div>
   <div class="fwrap">
@@ -561,10 +590,10 @@ footer strong{color:rgba(255,255,255,.65)}
     <div id="fSections"></div>
     <div id="fNextSteps"></div>
     <div class="act-bar">
-      <button class="act-btn a-pdf" id="actPdf" onclick="downloadPDF()">⬇ &nbsp;Download PDF Brief</button>
+      <button class="act-btn a-pdf" id="actHtml" onclick="downloadHTML()">⬇ &nbsp;Download Client Form</button>
       <button class="act-btn a-clr" onclick="clearForm()">✕ &nbsp;Clear All</button>
     </div>
-    <div class="form-foot">Fill in all fields then click Download to get your PDF brief.</div>
+    <div class="form-foot">Click "Download Client Form" → share the HTML file with your client → they fill it and download the PDF.</div>
   </div>
 </div>
 
@@ -572,20 +601,57 @@ footer strong{color:rgba(255,255,255,.65)}
 <!-- ═══ API KEY MODAL ═══ -->
 <div class="modal-overlay" id="apiModal">
   <div class="modal">
-    <div class="modal-icon">🔑</div>
-    <div class="modal-title">Free Models Unavailable</div>
-    <div class="modal-sub">
-      All free AI models are currently busy or down. You can use your own
-      <a href="https://openrouter.ai/keys" target="_blank">OpenRouter API key</a>
-      to continue — it's free to get one.<br><br>
-      Your key is never stored. It's only used for this session.
+
+    <div class="modal-top">
+      <div class="modal-icon">🔑</div>
+      <div class="modal-title">You're 1 Step Away!</div>
     </div>
+    <div class="modal-badge">✨ Free · Takes 60 seconds · No credit card</div>
+
+    <div class="modal-desc">
+      All free AI slots are currently busy. Just grab a free API key from OpenRouter
+      and paste it below — your form will generate instantly.
+    </div>
+
+    <div class="modal-steps">
+      <div class="modal-step">
+        <div class="modal-step-n">1</div>
+        <div class="modal-step-body">
+          <strong>Go to OpenRouter</strong>
+          Click this link →
+          <a href="https://openrouter.ai/signup" target="_blank">openrouter.ai/signup</a>
+          and create a free account (use Google for fastest signup)
+        </div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-n">2</div>
+        <div class="modal-step-body">
+          <strong>Create an API Key</strong>
+          Once logged in, go to
+          <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>
+          → click <code>Create Key</code> → give it any name → click <code>Create</code>
+        </div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-n">3</div>
+        <div class="modal-step-body">
+          <strong>Copy &amp; Paste It Below</strong>
+          Copy the key that starts with <code>sk-or-v1-...</code> and paste it in the box below
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <div class="modal-inp-label">Paste Your API Key</div>
     <input type="password" class="modal-inp" id="userApiKey" placeholder="sk-or-v1-...">
+    <div class="modal-inp-hint">🔒 Your key is never saved — only used for this request</div>
     <div class="modal-err" id="modalErr"></div>
     <div class="modal-btns">
-      <button class="modal-btn-primary" onclick="submitUserKey()">Use My Key →</button>
+      <button class="modal-btn-primary" onclick="submitUserKey()">Generate My Form →</button>
       <button class="modal-btn-secondary" onclick="closeModal()">Cancel</button>
     </div>
+
   </div>
 </div>
 
@@ -791,77 +857,255 @@ function clearForm(){
   document.querySelectorAll('#screen-form input[type=checkbox],#screen-form input[type=radio]').forEach(e=>e.checked=false);
 }
 
-/* ── PDF ── */
-async function downloadPDF(){
+/* ── DOWNLOAD HTML CLIENT FORM ── */
+function downloadHTML(){
   if(!schema) return;
-  const btns=[document.getElementById('topPdf'),document.getElementById('actPdf')];
-  btns.forEach(b=>{if(b){b.disabled=true;b.innerHTML='⏳ Generating...'}});
+  const btns=[document.getElementById('topHtml'),document.getElementById('actHtml')];
+  btns.forEach(b=>{if(b){b.disabled=true;b.innerHTML='⏳ Building...';}});
+
+  try{
+    const s = schema;
+    const date = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+
+    function fHtml(f){
+      let inp='';
+      switch(f.type){
+        case 'textarea':
+          inp='<textarea id="'+f.id+'" placeholder="'+(f.placeholder||'').replace(/"/g,'&quot;')+'" rows="3"></textarea>'; break;
+        case 'select':
+          inp='<select id="'+f.id+'"><option value="">— Select —</option>'+(f.options||[]).map(o=>'<option value="'+o+'">'+o+'</option>').join('')+'</select>'; break;
+        case 'checkbox-list':
+          inp='<div class="chk-list">'+(f.options||[]).map((o,i)=>'<label class="chk-item"><input type="checkbox" id="'+f.id+'_'+i+'" value="'+o+'"><span>'+o+'</span></label>').join('')+'</div>'; break;
+        case 'radio':
+          inp='<div class="yn">'+(f.options||[]).map(o=>'<label><input type="radio" name="'+f.id+'" value="'+o+'"><span>'+o+'</span></label>').join('')+'</div>'; break;
+        default:
+          inp='<input type="'+(f.type||'text')+'" id="'+f.id+'" placeholder="'+(f.placeholder||'').replace(/"/g,'&quot;')+'">';
+      }
+      const hint = f.hint ? '<span class="hint">'+f.hint+'</span>' : '';
+      return '<div class="f"><label for="'+f.id+'">'+f.label+hint+'</label>'+inp+'</div>';
+    }
+
+    function secHtml(sec){
+      let rows=''; const fields=sec.fields||[]; let i=0;
+      while(i<fields.length){
+        const f=fields[i], simple=['text','email','tel'].includes(f.type);
+        const nf=fields[i+1], ns=nf&&['text','email','tel'].includes(nf.type);
+        if(simple&&ns){ rows+='<div class="g2">'+fHtml(f)+fHtml(nf)+'</div>'; i+=2; }
+        else{ rows+='<div class="g1">'+fHtml(f)+'</div>'; i++; }
+      }
+      return '<div class="card"><div class="card-hdr"><div class="num">'+sec.number+'</div><div class="card-title">'+sec.title+'</div></div><div class="card-body">'+rows+'</div></div>';
+    }
+
+    const sectionsHtml = s.sections.map(secHtml).join('\n');
+
+    const nextStepsHtml = (s.nextSteps||[]).length
+      ? '<div class="steps-card"><h3>What Happens Next</h3>'+s.nextSteps.map((t,i)=>'<div class="step"><div class="step-n">'+(i+1)+'</div><div class="step-t">'+t+'</div></div>').join('')+'</div>'
+      : '';
+
+    // Build the SECTIONS array for the PDF generator inside the standalone file
+    const sectionsJson = JSON.stringify(s.sections.map(sec => ({
+      number: sec.number,
+      title: sec.title,
+      fields: (sec.fields||[]).map(f => ({
+        id: f.id,
+        label: f.label,
+        type: ['checkbox-list'].includes(f.type) ? 'checkbox' : f.type,
+        options: f.options || []
+      }))
+    })));
+
+    const saveKey = 'briefgen_' + s.title.replace(/\s+/g,'_').toLowerCase().replace(/[^a-z0-9_]/g,'');
+    const titleUp = s.title.toUpperCase();
+    const subtitle = s.subtitle;
+    const intro = s.intro;
+    const filename = s.title.replace(/[^a-z0-9]/gi,'_').toLowerCase() + '_brief_form';
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>${s.title}</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F0F4F8;color:#2D3748;font-size:14px;line-height:1.6}
+.wrap{max-width:880px;margin:28px auto;padding:0 16px 60px}
+.hdr{background:linear-gradient(135deg,#1A365C 0%,#2563A8 100%);color:#fff;text-align:center;padding:38px 40px 28px;border-radius:12px 12px 0 0}
+.hdr h1{font-size:27px;font-weight:700;letter-spacing:1.5px;margin-bottom:6px}
+.hdr h2{font-size:15px;font-weight:500;opacity:.85;margin-bottom:5px}
+.hdr p{font-size:12px;opacity:.6;font-style:italic}
+.meta{background:#142B4E;display:flex;justify-content:space-between;align-items:center;padding:9px 28px;font-size:12px;color:rgba(255,255,255,.65);flex-wrap:wrap;gap:4px}
+.meta span{white-space:nowrap}
+.meta input{background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.4);color:rgba(255,255,255,.85);font-size:12px;padding:0 4px;width:150px;font-family:inherit}
+.meta input:focus{outline:none}
+.intro{background:#EBF4FF;border-left:4px solid #2B6CB0;padding:18px 22px;margin:22px 0 20px;border-radius:0 8px 8px 0}
+.intro p{color:#1E3A5F;font-size:13.5px;line-height:1.75}
+.save-notice{background:#F0FFF4;border:1px solid #9AE6B4;border-radius:6px;padding:9px 16px;margin-bottom:18px;font-size:12.5px;color:#276749;display:flex;align-items:center;gap:8px}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:22px;overflow:hidden}
+.card-hdr{background:#1A365C;color:#fff;padding:13px 22px;display:flex;align-items:center;gap:12px}
+.num{background:#2563A8;color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.card-title{font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase}
+.card-body{padding:22px;display:flex;flex-direction:column;gap:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.g1{display:grid;grid-template-columns:1fr}
+.f{display:flex;flex-direction:column;gap:5px}
+.f label{font-size:11.5px;font-weight:700;color:#1A365C;text-transform:uppercase;letter-spacing:.4px;display:flex;flex-direction:column;gap:2px}
+.hint{font-size:11px;color:#999;font-style:italic;font-weight:400;text-transform:none;letter-spacing:0}
+input[type=text],input[type=tel],input[type=email],select,textarea{border:1.5px solid #CBD5E0;border-radius:6px;padding:9px 12px;font-size:13.5px;color:#2D3748;background:#FAFAFA;font-family:inherit;width:100%;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#2B6CB0;box-shadow:0 0 0 3px rgba(43,108,176,.13);background:#fff}
+textarea{resize:vertical;min-height:72px}
+.chk-list{display:flex;flex-direction:column;gap:7px;margin-top:5px}
+.chk-item{display:flex;align-items:center;gap:10px;padding:9px 13px;background:#F7FAFC;border-radius:6px;border:1.5px solid #E2E8F0;cursor:pointer;transition:.15s;user-select:none}
+.chk-item:hover{border-color:#2B6CB0;background:#EBF4FF}
+.chk-item input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:#2B6CB0;flex-shrink:0}
+.chk-item span{font-size:13px;color:#374151;line-height:1.4}
+.yn{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.yn label{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;background:#F0F4F8;border:1.5px solid #E2E8F0;cursor:pointer;font-size:13px;font-weight:500;color:#374151;text-transform:none;letter-spacing:0;transition:.15s}
+.yn label:hover{background:#EBF4FF;border-color:#2B6CB0}
+.yn input[type=radio]{accent-color:#2B6CB0;cursor:pointer}
+.steps-card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.07);padding:26px;margin-bottom:22px}
+.steps-card h3{font-size:17px;font-weight:700;color:#1A365C;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #E2E8F0}
+.step{display:flex;gap:13px;margin-bottom:11px;align-items:flex-start}
+.step-n{background:#2563A8;color:#fff;width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;margin-top:1px}
+.step-t{font-size:13.5px;color:#2D3748;line-height:1.5}
+.action-bar{display:flex;gap:10px;justify-content:center;margin:28px 0 16px;flex-wrap:wrap}
+.btn{padding:13px 30px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:700;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-pdf{background:#1A365C;color:#fff}
+.btn-pdf:hover{background:#2563A8;transform:translateY(-1px);box-shadow:0 4px 14px rgba(26,54,92,.35)}
+.btn-pdf:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-clr{background:#fff;color:#C53030;border:2px solid #FC8181}
+.btn-clr:hover{background:#FFF5F5}
+.footer{text-align:center;color:#aaa;font-size:11.5px;font-style:italic;padding:6px 0 10px}
+@media print{body{background:#fff}.wrap{margin:0;padding:0;max-width:100%}.action-bar,.save-notice{display:none!important}.card{box-shadow:none;break-inside:avoid;margin-bottom:14px;border:1px solid #ddd}.hdr,.meta,.card-hdr{-webkit-print-color-adjust:exact;print-color-adjust:exact}input,textarea,select{border:1px solid #999!important;background:#fff!important}.chk-item,.yn label{border:1px solid #bbb!important;background:#fff!important}}
+@media(max-width:620px){.g2{grid-template-columns:1fr}.meta{justify-content:center}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <h1>` + titleUp + `</h1>
+  <h2>` + subtitle + `</h2>
+  <p>Client Discovery &amp; Information Gathering Document</p>
+</div>
+<div class="meta">
+  <span>📅 Date: <span id="doc-date"></span></span>
+  <span>👤 Your Name: <input id="clientName" type="text" placeholder="Enter your name"></span>
+  <span>📄 Version 1.0</span>
+</div>
+
+<div class="intro"><p>` + intro + `</p></div>
+<div class="save-notice">💾 <span>Your answers are <strong>automatically saved</strong> in your browser — close and come back anytime.</span></div>
+
+` + sectionsHtml + `
+` + nextStepsHtml + `
+
+<div class="action-bar">
+  <button class="btn btn-pdf" id="dlBtn" onclick="makePDF()">⬇ &nbsp;Download as PDF</button>
+  <button class="btn btn-clr" onclick="clearAll()">✕ &nbsp;Clear All</button>
+</div>
+<div class="footer">Fill in all fields above, then click Download as PDF and send the PDF back to your contact.</div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"><\/script>
+<script>
+'use strict';
+const SAVE_KEY='` + saveKey + `';
+const SECTIONS=` + sectionsJson + `;
+
+document.getElementById('doc-date').textContent=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+
+function saveAll(){try{const d={};document.querySelectorAll('input,select,textarea').forEach(el=>{if(!el.id&&!el.name)return;if(el.type==='checkbox'||el.type==='radio')d[el.id||el.name+'__'+el.value]=el.checked;else d[el.id]=el.value;});localStorage.setItem(SAVE_KEY,JSON.stringify(d));}catch(e){}}
+function loadAll(){try{const d=JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');Object.entries(d).forEach(([k,v])=>{const el=document.getElementById(k);if(el){if(el.type==='checkbox'||el.type==='radio')el.checked=v;else el.value=v;}});}catch(e){}}
+document.addEventListener('input',saveAll);
+document.addEventListener('change',saveAll);
+window.addEventListener('load',loadAll);
+
+function gv(id){const e=document.getElementById(id);if(!e)return'';if(e.tagName==='SELECT')return e.options[e.selectedIndex]?.value||'';return e.value||'';}
+function chk(id){return document.getElementById(id)?.checked||false;}
+function rv(name){return document.querySelector('input[name="'+name+'"]:checked')?.value||'';}
+
+async function makePDF(){
+  const btn=document.getElementById('dlBtn');
+  const orig=btn.innerHTML;
+  btn.disabled=true;btn.innerHTML='⏳ &nbsp;Generating...';
   try{
     const {jsPDF}=window.jspdf;
     const doc=new jsPDF({unit:'mm',format:'a4'});
-    const PW=210,PH=297,ML=18,MR=18,TW=PW-ML-MR; let y=20;
-    const pg=(n=12)=>{if(y+n>PH-18){doc.addPage();y=20}};
+    const PW=210,PH=297,ML=18,MR=18,TW=PW-ML-MR;let y=20;
+    const pg=(n=12)=>{if(y+n>PH-18){doc.addPage();y=20;}};
+    const secBar=(num,title)=>{pg(16);doc.setFillColor(26,54,92);doc.rect(ML,y,TW,10,'F');doc.setFillColor(37,99,168);doc.circle(ML+7,y+5,4.5,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text(String(num),ML+7,y+6,{align:'center'});doc.setFontSize(9);doc.text(title.toUpperCase(),ML+16,y+6);doc.setTextColor(45,55,72);y+=13;};
+    const field=(label,val)=>{if(!val)return;pg(14);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(37,99,168);doc.text(label.toUpperCase(),ML,y);y+=4.5;doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(45,55,72);doc.splitTextToSize(String(val),TW-4).forEach(l=>{pg(6);doc.text(l,ML+3,y);y+=5.5;});y+=2;};
+    const gap=()=>{y+=4;};
 
-    // Header
-    doc.setFillColor(15,35,64); doc.rect(0,0,PW,38,'F');
-    doc.setFillColor(10,24,40); doc.rect(0,38,PW,13,'F');
+    doc.setFillColor(26,54,92);doc.rect(0,0,PW,36,'F');
+    doc.setFillColor(20,43,78);doc.rect(0,36,PW,12,'F');
     doc.setTextColor(255,255,255);
-    doc.setFont('helvetica','bold'); doc.setFontSize(15);
-    doc.text(schema.title,PW/2,15,{align:'center'});
-    doc.setFontSize(10); doc.setFont('helvetica','normal');
-    doc.text(schema.subtitle,PW/2,24,{align:'center'});
-    doc.setFontSize(8); doc.setTextColor(180,210,248);
-    doc.text('Discovery & Information Gathering Document',PW/2,32,{align:'center'});
-    const pn=document.getElementById('preparer')?.value||'—';
+    doc.setFont('helvetica','bold');doc.setFontSize(15);
+    doc.text('` + titleUp + `',PW/2,14,{align:'center'});
+    doc.setFontSize(10);doc.setFont('helvetica','normal');
+    doc.text('` + subtitle + `',PW/2,23,{align:'center'});
+    doc.setFontSize(8);doc.setTextColor(180,210,248);
+    doc.text('Client Discovery Document',PW/2,31,{align:'center'});
+    const cn=gv('clientName')||'—';
     const ds=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
-    doc.setFontSize(7.5); doc.setTextColor(200,225,255);
-    doc.text(`Date: ${ds}   |   Prepared by: ${pn}   |   Version 1.0`,PW/2,44,{align:'center'});
-    doc.setTextColor(45,55,72); y=56;
+    doc.setFontSize(7.5);doc.setTextColor(200,225,255);
+    doc.text('Client: '+cn+'   |   Date: '+ds,PW/2,43,{align:'center'});
+    doc.setTextColor(45,55,72);y=54;
 
-    const secBar=(num,title)=>{
-      pg(16); doc.setFillColor(15,35,64); doc.rect(ML,y,TW,10,'F');
-      doc.setFillColor(26,74,138); doc.circle(ML+7,y+5,4.5,'F');
-      doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(8);
-      doc.text(String(num),ML+7,y+6,{align:'center'});
-      doc.setFontSize(9); doc.text(title.toUpperCase(),ML+16,y+6);
-      doc.setTextColor(45,55,72); y+=13;
-    };
-    const fld=(label,val)=>{
-      if(!val&&val!==0) return; pg(14);
-      doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(80,110,165);
-      doc.text(label.toUpperCase(),ML,y); y+=4.5;
-      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(45,55,72);
-      doc.splitTextToSize(String(val),TW-5).forEach(l=>{pg(6);doc.text(l,ML+3,y);y+=5.5});
-      y+=2;
-    };
-    const gv=id=>{ const e=document.getElementById(id); if(!e)return''; if(e.tagName==='SELECT')return e.options[e.selectedIndex]?.value||''; return e.value||''; };
-    const ck=(id,i)=>document.getElementById(`${id}_${i}`)?.checked;
-    const rv=id=>document.querySelector(`input[name="${id}"]:checked`)?.value||'';
-
-    schema.sections.forEach(sec=>{
+    SECTIONS.forEach(sec=>{
       secBar(sec.number,sec.title);
-      (sec.fields||[]).forEach(f=>{
-        if(f.type==='checkbox-list') fld(f.label,(f.options||[]).filter((_,i)=>ck(f.id,i)).join(', ')||'—');
-        else if(f.type==='radio') fld(f.label,rv(f.id)||'—');
-        else fld(f.label,gv(f.id)||'—');
+      sec.fields.forEach(f=>{
+        if(f.type==='checkbox'){
+          const checked=(f.options||[]).filter((_,i)=>chk(f.id+'_'+i));
+          field(f.label,checked.length?checked.join(', '):'—');
+        }else if(f.type==='radio'){
+          field(f.label,rv(f.id)||'—');
+        }else{
+          field(f.label,gv(f.id)||'—');
+        }
       });
-      y+=4;
+      gap();
     });
 
     const tot=doc.getNumberOfPages();
-    for(let p=1;p<=tot;p++){
-      doc.setPage(p); doc.setFontSize(7); doc.setFont('helvetica','italic'); doc.setTextColor(180,180,180);
-      doc.text('Confidential – prepared for project development purposes.',ML,PH-8);
-      doc.text(`Page ${p} / ${tot}`,PW-MR,PH-8,{align:'right'});
-    }
-    doc.save(schema.title.replace(/[^a-z0-9]/gi,'_').toLowerCase()+'.pdf');
-    toast('✅ PDF downloaded!');
+    for(let p=1;p<=tot;p++){doc.setPage(p);doc.setFontSize(7);doc.setFont('helvetica','italic');doc.setTextColor(170,170,170);doc.text('Confidential – prepared for project development purposes.',ML,PH-7);doc.text('Page '+p+' / '+tot,PW-MR,PH-7,{align:'right'});}
+
+    doc.save('` + filename + `.pdf');
   }catch(err){
-    toast('❌ PDF error — try again',true);
+    alert('Could not generate PDF. Make sure you are connected to the internet.');
     console.error(err);
   }
-  btns.forEach(b=>{ if(!b)return; b.disabled=false; b.id==='topPdf'?b.innerHTML='⬇ &nbsp;Download PDF':b.innerHTML='⬇ &nbsp;Download PDF Brief'; });
+  btn.innerHTML=orig;btn.disabled=false;
 }
+
+function clearAll(){
+  if(!confirm('Clear all your answers? This cannot be undone.'))return;
+  document.querySelectorAll('input[type=text],input[type=tel],input[type=email],textarea').forEach(e=>e.value='');
+  document.querySelectorAll('select').forEach(e=>e.selectedIndex=0);
+  document.querySelectorAll('input[type=checkbox],input[type=radio]').forEach(e=>e.checked=false);
+  try{localStorage.removeItem(SAVE_KEY);}catch(e){}
+}
+<\/script>
+</body>
+</html>`;
+
+    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename + '.html';
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('✅ Client form downloaded!');
+
+  }catch(err){
+    toast('❌ Error generating form', true);
+    console.error(err);
+  }
+  btns.forEach(b=>{ if(!b)return; b.disabled=false; b.innerHTML='⬇ &nbsp;Download Client Form'; });
+}
+
 </script>
 </body>
 </html>
