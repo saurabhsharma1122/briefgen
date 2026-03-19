@@ -922,9 +922,9 @@ async function makePDF(){
     doc.setFillColor(20,43,78);doc.rect(0,36,PW,12,'F');
     doc.setTextColor(255,255,255);
     doc.setFont('helvetica','bold');doc.setFontSize(15);
-    doc.text('` + titleUp + `',PW/2,14,{align:'center'});
+    doc.text(` + JSON.stringify(titleUp) + `,PW/2,14,{align:'center'});
     doc.setFontSize(10);doc.setFont('helvetica','normal');
-    doc.text('` + subtitle + `',PW/2,23,{align:'center'});
+    doc.text(` + JSON.stringify(subtitle) + `,PW/2,23,{align:'center'});
     doc.setFontSize(8);doc.setTextColor(180,210,248);
     doc.text('Client Discovery Document',PW/2,31,{align:'center'});
     const cn=gv('clientName')||'—';
