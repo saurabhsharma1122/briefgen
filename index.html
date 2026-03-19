@@ -354,78 +354,35 @@ footer strong{color:rgba(255,255,255,.65)}
 
 
 /* ─── API KEY MODAL ─── */
-.modal-overlay{
-  position:fixed;inset:0;z-index:1000;
-  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;opacity:0;pointer-events:none;transition:.25s;
-}
+.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.25s}
 .modal-overlay.show{opacity:1;pointer-events:all}
-.modal{
-  background:var(--card);border:1.5px solid var(--border);border-radius:20px;
-  padding:32px;width:100%;max-width:500px;
-  transform:translateY(20px);transition:.25s;
-  max-height:90vh;overflow-y:auto;
-}
+.modal{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:32px;width:100%;max-width:500px;transform:translateY(20px);transition:.25s;max-height:90vh;overflow-y:auto}
 .modal-overlay.show .modal{transform:translateY(0)}
 .modal-top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
 .modal-icon{font-size:28px}
 .modal-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1.5px;color:var(--ink)}
-.modal-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:#FFF3EE;border:1.5px solid rgba(232,81,10,.25);
-  color:var(--orange);border-radius:100px;
-  padding:5px 12px;font-size:11px;font-weight:700;letter-spacing:.5px;
-  margin-bottom:18px;
-}
+.modal-badge{display:inline-flex;align-items:center;gap:6px;background:#FFF3EE;border:1.5px solid rgba(232,81,10,.25);color:var(--orange);border-radius:100px;padding:5px 12px;font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:18px}
 .modal-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px}
 .modal-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
-.modal-step{
-  display:flex;align-items:flex-start;gap:12px;
-  background:var(--cream);border:1px solid var(--border);border-radius:10px;
-  padding:12px 14px;
-}
-.modal-step-n{
-  width:24px;height:24px;border-radius:50%;background:var(--orange);color:#fff;
-  font-family:'Bebas Neue',sans-serif;font-size:14px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
-}
+.modal-step{display:flex;align-items:flex-start;gap:12px;background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.modal-step-n{width:24px;height:24px;border-radius:50%;background:var(--orange);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 .modal-step-body{font-size:12.5px;line-height:1.55;color:var(--ink)}
 .modal-step-body strong{display:block;font-weight:700;margin-bottom:2px;font-size:13px}
 .modal-step-body a{color:var(--orange);font-weight:700;text-decoration:none}
 .modal-step-body a:hover{text-decoration:underline}
-.modal-step-body code{
-  background:#E8E4DE;border-radius:4px;padding:1px 6px;
-  font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink);
-}
+.modal-step-body code{background:#E8E4DE;border-radius:4px;padding:1px 6px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink)}
 .modal-divider{height:1px;background:var(--border);margin:0 0 18px}
 .modal-inp-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.modal-inp{
-  width:100%;border:1.5px solid var(--border);border-radius:10px;
-  padding:13px 16px;font-family:'DM Mono',monospace;font-size:13px;
-  color:var(--ink);background:var(--cream);margin-bottom:6px;
-  transition:.2s;
-}
+.modal-inp{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:13px 16px;font-family:'DM Mono',monospace;font-size:13px;color:var(--ink);background:var(--cream);margin-bottom:6px;transition:.2s}
 .modal-inp:focus{outline:none;border-color:var(--orange);background:#fff;box-shadow:0 0 0 4px rgba(232,81,10,.1)}
 .modal-inp::placeholder{color:#B0AA9E}
 .modal-inp-hint{font-size:11px;color:var(--muted);margin-bottom:14px}
 .modal-err{font-size:12px;color:#C0392B;margin-bottom:12px;min-height:16px;font-family:'Syne',sans-serif}
 .modal-btns{display:flex;gap:10px}
-.modal-btn-primary{
-  flex:1;padding:13px;background:var(--orange);color:#fff;
-  border:none;border-radius:10px;
-  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
-  cursor:pointer;transition:.2s;
-}
+.modal-btn-primary{flex:1;padding:13px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
 .modal-btn-primary:hover{background:#C8440A}
-.modal-btn-secondary{
-  padding:13px 18px;background:var(--cream);color:var(--muted);
-  border:1.5px solid var(--border);border-radius:10px;
-  font-family:'Syne',sans-serif;font-size:13px;font-weight:600;
-  cursor:pointer;transition:.2s;
-}
+.modal-btn-secondary{padding:13px 18px;background:var(--cream);color:var(--muted);border:1.5px solid var(--border);border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
 .modal-btn-secondary:hover{border-color:var(--ink);color:var(--ink)}
-
 /* ─── RESPONSIVE ─── */
 @media(max-width:640px){
   .nav{padding:12px 18px}
@@ -597,52 +554,18 @@ footer strong{color:rgba(255,255,255,.65)}
   </div>
 </div>
 
-
 <!-- ═══ API KEY MODAL ═══ -->
 <div class="modal-overlay" id="apiModal">
   <div class="modal">
-
-    <div class="modal-top">
-      <div class="modal-icon">🔑</div>
-      <div class="modal-title">You're 1 Step Away!</div>
-    </div>
+    <div class="modal-top"><div class="modal-icon">🔑</div><div class="modal-title">You're 1 Step Away!</div></div>
     <div class="modal-badge">✨ Free · Takes 60 seconds · No credit card</div>
-
-    <div class="modal-desc">
-      All free AI slots are currently busy. Just grab a free API key from OpenRouter
-      and paste it below — your form will generate instantly.
-    </div>
-
+    <div class="modal-desc">All free AI slots are currently busy. Just grab a free API key from OpenRouter and paste it below — your form will generate instantly.</div>
     <div class="modal-steps">
-      <div class="modal-step">
-        <div class="modal-step-n">1</div>
-        <div class="modal-step-body">
-          <strong>Go to OpenRouter</strong>
-          Click this link →
-          <a href="https://openrouter.ai/signup" target="_blank">openrouter.ai/signup</a>
-          and create a free account (use Google for fastest signup)
-        </div>
-      </div>
-      <div class="modal-step">
-        <div class="modal-step-n">2</div>
-        <div class="modal-step-body">
-          <strong>Create an API Key</strong>
-          Once logged in, go to
-          <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>
-          → click <code>Create Key</code> → give it any name → click <code>Create</code>
-        </div>
-      </div>
-      <div class="modal-step">
-        <div class="modal-step-n">3</div>
-        <div class="modal-step-body">
-          <strong>Copy &amp; Paste It Below</strong>
-          Copy the key that starts with <code>sk-or-v1-...</code> and paste it in the box below
-        </div>
-      </div>
+      <div class="modal-step"><div class="modal-step-n">1</div><div class="modal-step-body"><strong>Go to OpenRouter</strong>Click → <a href="https://openrouter.ai/signup" target="_blank">openrouter.ai/signup</a> and create a free account (use Google for fastest signup)</div></div>
+      <div class="modal-step"><div class="modal-step-n">2</div><div class="modal-step-body"><strong>Create an API Key</strong>Go to <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → click <code>Create Key</code> → give it any name → click <code>Create</code></div></div>
+      <div class="modal-step"><div class="modal-step-n">3</div><div class="modal-step-body"><strong>Copy &amp; Paste It Below</strong>Copy the key starting with <code>sk-or-v1-...</code> and paste it in the box below</div></div>
     </div>
-
     <div class="modal-divider"></div>
-
     <div class="modal-inp-label">Paste Your API Key</div>
     <input type="password" class="modal-inp" id="userApiKey" placeholder="sk-or-v1-...">
     <div class="modal-inp-hint">🔒 Your key is never saved — only used for this request</div>
@@ -651,10 +574,8 @@ footer strong{color:rgba(255,255,255,.65)}
       <button class="modal-btn-primary" onclick="submitUserKey()">Generate My Form →</button>
       <button class="modal-btn-secondary" onclick="closeModal()">Cancel</button>
     </div>
-
   </div>
 </div>
-
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -704,93 +625,52 @@ async function generate(userApiKey = null){
   const desc = _pendingDesc || document.getElementById('userDesc').value.trim();
   const errEl = document.getElementById('genError');
   errEl.classList.remove('show');
-
   if(!desc){
     const ta = document.getElementById('userDesc');
-    ta.classList.add('shake');
-    ta.style.borderColor='var(--orange)';
-    ta.focus();
+    ta.classList.add('shake'); ta.style.borderColor='var(--orange)'; ta.focus();
     setTimeout(()=>{ ta.classList.remove('shake'); ta.style.borderColor=''; }, 600);
     return;
   }
-
   const btn = document.getElementById('genBtn');
   btn.disabled=true; btn.innerHTML='⏳ &nbsp;Generating...';
   show('screen-loading'); startLoad();
-
   try{
     const body = { description: desc };
     if(userApiKey) body.userApiKey = userApiKey;
-
     const res = await fetch('/api/generate', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+      method:'POST', headers:{'Content-Type':'application/json'},
       body:JSON.stringify(body)
     });
-
     const data = await res.json();
-
-    // All free models failed — ask user for their own key
     if(!res.ok && (data.error === 'ALL_MODELS_FAILED' || data.error === 'NO_API_KEY')){
-      stopLoad();
-      show('screen-gen');
+      stopLoad(); show('screen-gen');
       btn.disabled=false; btn.innerHTML='Generate My Brief Form <span class="arrow">→</span>';
-      _pendingDesc = desc;
-      openModal();
-      return;
+      _pendingDesc = desc; openModal(); return;
     }
-
-    if(!res.ok){
-      throw new Error(data.message || data.error || `Server error ${res.status}`);
-    }
-
+    if(!res.ok) throw new Error(data.message || data.error || `Server error ${res.status}`);
     _pendingDesc = null;
-    schema = data.schema;
-    stopLoad();
-    renderForm(schema);
-    show('screen-form');
-
+    schema = data.schema; stopLoad(); renderForm(schema); show('screen-form');
   }catch(err){
-    stopLoad();
-    show('screen-gen');
+    stopLoad(); show('screen-gen');
     btn.disabled=false; btn.innerHTML='Generate My Brief Form <span class="arrow">→</span>';
-
     const msg = err.message.includes('Failed to fetch')
       ? 'Cannot connect to server. Make sure the site is deployed on Vercel.'
       : (err.message || 'Something went wrong. Please try again.');
-
-    errEl.textContent = '⚠️ ' + msg;
-    errEl.classList.add('show');
-    console.error(err);
+    errEl.textContent = '⚠️ ' + msg; errEl.classList.add('show'); console.error(err);
   }
 }
 
-/* ── MODAL ── */
-function openModal(){
-  document.getElementById('apiModal').classList.add('show');
-  document.getElementById('userApiKey').focus();
-  document.getElementById('modalErr').textContent = '';
-}
-function closeModal(){
-  document.getElementById('apiModal').classList.remove('show');
-  _pendingDesc = null;
-}
+function openModal(){ document.getElementById('apiModal').classList.add('show'); document.getElementById('userApiKey').focus(); document.getElementById('modalErr').textContent=''; }
+function closeModal(){ document.getElementById('apiModal').classList.remove('show'); _pendingDesc=null; }
 async function submitUserKey(){
-  const key = document.getElementById('userApiKey').value.trim();
-  const errEl = document.getElementById('modalErr');
-  if(!key || !key.startsWith('sk-or-')){
-    errEl.textContent = 'Please enter a valid OpenRouter key (starts with sk-or-)';
-    return;
-  }
-  errEl.textContent = '';
-  document.getElementById('apiModal').classList.remove('show');
+  const key=document.getElementById('userApiKey').value.trim();
+  const errEl=document.getElementById('modalErr');
+  if(!key||!key.startsWith('sk-or-')){ errEl.textContent='Please enter a valid OpenRouter key (starts with sk-or-)'; return; }
+  errEl.textContent=''; document.getElementById('apiModal').classList.remove('show');
   await generate(key);
 }
-// Allow Enter key in modal input
-document.addEventListener('DOMContentLoaded', ()=>{
-  document.getElementById('userApiKey').addEventListener('keydown', e=>{
-    if(e.key === 'Enter') submitUserKey();
-  });
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('userApiKey').addEventListener('keydown',e=>{ if(e.key==='Enter') submitUserKey(); });
 });
 
 /* ── RENDER ── */
