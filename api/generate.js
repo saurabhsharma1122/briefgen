@@ -1,111 +1,102 @@
 export default async function handler(req, res) {
-  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { description } = req.body;
-
-  if (!description || description.trim().length < 5) {
-    return res.status(400).json({ error: 'Please provide a description' });
+  if (!description || !description.trim()) {
+    return res.status(400).json({ error: 'Description is required' });
   }
 
-  const OPENROUTER_KEY = process.env.OPENROUTER_API_KEY;
-
-  if (!OPENROUTER_KEY) {
-    return res.status(500).json({ error: 'Server not configured. Add OPENROUTER_API_KEY to Vercel env vars.' });
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'API key not configured' });
   }
 
-  const prompt = `You are a professional business consultant who creates client project brief forms. Generate a comprehensive brief form for the following use case:
+  const prompt = `You are a professional form designer. A freelancer has described their work below. Generate a detailed client brief/discovery form schema for them.
 
-"${description.trim()}"
+Freelancer description: "${description}"
 
-Return ONLY a valid JSON object — no markdown, no backticks, no explanation before or after. Follow this EXACT structure:
+Respond ONLY with a valid JSON object in exactly this structure (no markdown, no extra text):
 {
-  "title": "FORM TITLE IN CAPS (e.g. WEB DEVELOPMENT PROJECT BRIEF)",
-  "subtitle": "Human-friendly subtitle (e.g. Client Discovery & Requirements Form)",
-  "intro": "2-3 sentence intro explaining what this form is and how the client should use it",
+  "title": "Short title of the brief form (e.g. Wedding Photography Brief)",
+  "subtitle": "One line subtitle (e.g. Client Discovery & Project Requirements)",
+  "intro": "A warm 2-3 sentence intro paragraph for the client explaining what this form is for",
   "sections": [
     {
       "number": 1,
       "title": "Section Title",
       "fields": [
         {
-          "id": "unique_snake_case_id",
+          "id": "unique_field_id",
           "label": "Field Label",
-          "type": "text",
-          "placeholder": "helpful example",
-          "hint": ""
+          "type": "text|email|tel|textarea|select|checkbox-list|radio",
+          "placeholder": "Placeholder text (for text/textarea fields)",
+          "hint": "Optional helper text shown below the label",
+          "options": ["Option 1", "Option 2"] 
         }
       ]
     }
   ],
-  "nextSteps": ["Step 1 description", "Step 2 description", "Step 3 description"]
+  "nextSteps": [
+    "Step 1 description",
+    "Step 2 description",
+    "Step 3 description"
+  ]
 }
 
-FIELD TYPES available:
-- "text" → single line
-- "email" → email address
-- "tel" → phone number
-- "textarea" → multi-line (use for descriptions, addresses, long answers)
-- "select" → dropdown, must include "options": ["A", "B", "C"]
-- "checkbox-list" → multiple choice, must include "options": ["A", "B", "C"]
-- "radio" → single choice, must include "options": ["Yes", "No"]
-
-RULES:
-- 5 to 7 sections total
-- 3 to 6 fields per section
-- Mix field types — do NOT make everything "text"
-- All fields must be specific and relevant to the use case
-- Last section must be "Additional Notes / Special Requests" with one textarea field
-- Return ONLY the raw JSON object, nothing else`;
+Rules:
+- Create 4-6 sections relevant to the freelancer's specific work
+- Each section should have 3-6 fields
+- Use "options" array only for select, checkbox-list, and radio types
+- Use "placeholder" only for text, email, tel, textarea types
+- Field IDs must be unique snake_case strings
+- Make questions highly specific to the described role
+- nextSteps should have 3-4 items describing what happens after form submission`;
 
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENROUTER_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
         'HTTP-Referer': 'https://briefgen.vercel.app',
         'X-Title': 'BriefGen'
       },
       body: JSON.stringify({
-        model: 'google/gemma-3-12b-it:free',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 4000,
-        temperature: 0.7
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
+        messages: [
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 2500
       })
     });
 
     if (!response.ok) {
       const errData = await response.json().catch(() => ({}));
       console.error('OpenRouter error:', errData);
-      return res.status(502).json({ 
-        error: errData.error?.message || `OpenRouter error: ${response.status}` 
-      });
+      return res.status(500).json({ error: errData.error?.message || 'AI service error' });
     }
 
     const data = await response.json();
     const raw = data.choices?.[0]?.message?.content || '';
 
-    // Strip any accidental markdown fences
-    const cleaned = raw
-      .replace(/```json\n?/g, '')
-      .replace(/```\n?/g, '')
-      .trim();
+    // Strip markdown code fences if present
+    const cleaned = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
 
-    // Validate it's parseable JSON before sending
-    const parsed = JSON.parse(cleaned);
-
-    return res.status(200).json({ schema: parsed });
-
-  } catch (err) {
-    console.error('Generate error:', err.message);
-
-    if (err instanceof SyntaxError) {
-      return res.status(502).json({ error: 'AI returned invalid data. Please try again.' });
+    let schema;
+    try {
+      schema = JSON.parse(cleaned);
+    } catch (e) {
+      console.error('JSON parse error:', e, '\nRaw:', raw);
+      return res.status(500).json({ error: 'AI returned invalid format. Please try again.' });
     }
 
-    return res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    return res.status(200).json({ schema });
+
+  } catch (err) {
+    console.error('Fetch error:', err);
+    return res.status(500).json({ error: 'Failed to connect to AI service.' });
   }
 }
